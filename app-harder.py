@@ -26,6 +26,13 @@ def index():
 # then you can call db.execute(query) to issue sql commands
 # and db.commit() to commit your changes
 
+def dict_factory(cursor, row):
+    """ Makes sqlite3 return dictionaries instead of row objects."""
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
 def connect_db():
     """Connects to the specific database."""
     conn = sqlite3.connect(app.config['DATABASE'])
